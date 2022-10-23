@@ -13,9 +13,15 @@ from matplotlib.animation import FuncAnimation
 import matplotlib.animation as animation
 import matplotlib.animation as anim
 from mpl_toolkits.mplot3d import Axes3D
+from matplotlib import cbook
+from matplotlib import cm
+from matplotlib.colors import LightSource
+import matplotlib.colors as colors
 from shallow_water_simulation import check_stability, plus_and_minus, uvh, eta_star, shallow_water_simulation
 
+
 """ === Question 1 === """
+#%%
 """ === Part b === """
 Lx = 1 # length of spatial domain, x-direction in meters
 Ly = 2 # length of spatial domain, y-direction in meters
@@ -61,10 +67,12 @@ if stable is True:
     print("The algorithm is stable.")
 else:
     print("The algorithm is unstable.")
-    
+
+#%%    
 # === Calculating the Values for the Simulation ===
 u,v,eta = shallow_water_simulation(Lx, Ly, T, eps, dx, dy, dt, init_cond, H)
-    
+
+#%%
 # === Animation ===
 Writer = animation.writers['ffmpeg']
 writer = Writer(fps=15, metadata=dict(artist='Me'), bitrate=1800)
@@ -84,9 +92,18 @@ ax.set_xlabel("x-axis (m)")
 ax.set_ylabel("y-axis (m)")
 ax.set_zlabel("Eta (m)")
 
+water_cmap = colors.LinearSegmentedColormap.from_list("water", cm.Blues(np.linspace(.75,1,100))) # taking the last 1/4 of the 'Blues' colormap to create a custom cmap
+
 def animations(time):
     ax.clear()
-    line = ax.plot_surface(X,Y,eta[time,1:,1:])
+    Z = eta[time,1:,1:]
+    
+    ls = LightSource(0, 90)
+    surface_shading = ls.shade(Z, cmap = water_cmap, blend_mode='soft')
+    line = ax.plot_surface(X, Y, Z, facecolors = surface_shading)
+    
+    
+    #line = ax.plot_surface(X,Y,eta[time,1:,1:])
     ax.view_init(elev=30., azim=45)
     ax.set_xlabel("x-axis (m)")
     ax.set_ylabel("y-axis (m)")
@@ -95,9 +112,10 @@ def animations(time):
     return line,
 
 ani = FuncAnimation(fig, animations, frames=np.arange(0,K,10), interval=20000, blit=False)
-ani.save('animation_part_b.mp4', writer=writer)
+ani.save('animation_part_b_ver2.mp4', writer=writer)
 plt.show()
 
+#%%
 """ === Part c === """
 eta_init = np.zeros((M,N))
 eta_init[1,:] = 0.05
@@ -114,7 +132,8 @@ if stable is True:
     print("The algorithm is stable.")
 else:
     print("The algorithm is unstable.")
-    
+
+#%%
 # === Calculating the Values for the Simulation ===
 u,v,eta = shallow_water_simulation(Lx, Ly, T, eps, dx, dy, dt, init_cond, H)
   
@@ -132,7 +151,7 @@ line = ax.plot_surface(X, Y, eta[0,1:,1:])
 
 ax.set_xlim([0.0, M*dy])
 ax.set_ylim([0.0, N*dx])
-ax.set_zlim([-0.005, 0.0])
+ax.set_zlim([-0.005, 0.15])
 plt.title("Eta vs. (x,y)")
 ax.set_xlabel("x-axis (m)")
 ax.set_ylabel("y-axis (m)")
@@ -140,7 +159,14 @@ ax.set_zlabel("Eta (m)")
 
 def animations(time):
     ax.clear()
-    line = ax.plot_surface(X,Y,eta[time,1:,1:])
+    
+    Z = eta[time,1:,1:]
+    
+    ls = LightSource(0, 90)
+    surface_shading = ls.shade(Z, cmap = water_cmap, blend_mode='soft')
+    line = ax.plot_surface(X, Y, Z, facecolors = surface_shading)
+    
+    #line = ax.plot_surface(X,Y,eta[time,1:,1:])
     ax.view_init(elev=30., azim=45)
     ax.set_xlabel("x-axis (m)")
     ax.set_ylabel("y-axis (m)")
@@ -148,7 +174,8 @@ def animations(time):
     ax.set_zlim([-0.005, 0.15])
     return line,
 
+
+
 ani = FuncAnimation(fig, animations, frames=np.arange(0,K,10), interval=20000, blit=False)
-ani.save('animation_part_c.mp4', writer=writer)
+ani.save('animation_part_c_ver2.mp4', writer=writer)
 plt.show()
-    
