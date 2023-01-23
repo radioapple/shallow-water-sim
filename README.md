@@ -54,3 +54,4 @@ https://user-images.githubusercontent.com/104711470/213978420-0f12a86d-9397-481d
 * Combine all plot and animation code into one "create_animation" function.
 * Create a user interface where changing the input of the simulation is a lot easier/more accesible to someone not familiar with programming OR 
 offer a range of inputs to click on.
+* Add in math & physics section for more details on how or why the values are calculated the way they are and what to expect when testing.
