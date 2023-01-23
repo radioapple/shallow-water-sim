@@ -2,11 +2,11 @@
 A shallow water simulator in a rectangular tub that uses the Navier-Stokes Equations to create an animation of how the surface of the water will 
 move over time when given the initial state of the surface of the water.
 ## Outline
-* [1 - Explanation of Inputs](1---Explanation-of-Inputs)
-* [2 - Animations](2---Animations)
-  * [(i) Water droplet as an input]((i)-Water-droplet-as-an-input)
-  * [(ii) Water wall as an input]((ii)-Water-wall-as-an-input)
-* [Improvements to Make](Improvements-to-Make)
+* [1 - Explanation of Inputs](README.md#1---explanation-of-inputs)
+* [2 - Animations](README.md#2---animations)
+  * [(i) Water droplet as an input](README.md#i-water-droplet-as-an-input)
+  * [(ii) Water wall as an input](README.md#ii-water-wall-as-an-input)
+* [Improvements to Make](README.md#improvements-to-make)
 
 ## 1 - Explanation of Inputs
 The calculations for the simulation as well as the function that does the calculations is contained in the 'shallow_water_simulation.py' file. 
